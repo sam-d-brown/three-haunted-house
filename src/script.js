@@ -92,10 +92,13 @@ for (let i = 0; i < 30; i++) {
   gravesGrp.add(grave);
 
   const angle = Math.random() * Math.PI * 2;
-  const radius = 4;
-  grave.position.y = grave.geometry.parameters.height / 2 + 0.01;
-  grave.position.x = Math.sin(angle) * 4;
-  grave.position.z = Math.cos(angle) * 4;
+  const radius = 3 + Math.random() * 4;
+  grave.position.y =
+    (grave.geometry.parameters.height / 2) * Math.random() + 0.01;
+  grave.position.x = Math.sin(angle) * radius;
+  grave.position.z = Math.cos(angle) * radius;
+
+  grave.rotation.x = (Math.random() - 0.5) * 0.3;
 }
 
 scene.add(gravesGrp);
