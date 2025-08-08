@@ -45,7 +45,40 @@ const floor = new THREE.Mesh(
   new THREE.MeshStandardMaterial()
 );
 floor.rotation.x = 0.5 * -Math.PI;
-scene.add(floor);
+houseGrp.add(floor);
+
+/**
+ * Doooooor
+ */
+
+const door = new THREE.Mesh(
+  new THREE.PlaneGeometry(2.2, 2.2),
+  new THREE.MeshStandardMaterial({
+    color: "red",
+  })
+);
+
+door.position.y = door.geometry.parameters.height / 2;
+door.position.z = 2 + 0.01;
+houseGrp.add(door);
+
+/**
+ * Bushes
+ */
+
+const bushGeometry = new THREE.SphereGeometry(1, 16, 16);
+const bushMaterial = new THREE.MeshStandardMaterial();
+const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
+bush1.scale.set(0.5, 0.5, 0.5);
+bush1.position.set(0.8, 0.2, 2.2);
+const bush2 = new THREE.Mesh(bushGeometry, bushMaterial);
+bush2.scale.set(0.25, 0.25, 0.25);
+bush2.position.set(1.4, 0.1, 2.1);
+const bush3 = new THREE.Mesh(bushGeometry, bushMaterial);
+bush3.scale.set(0.4, 0.4, 0.4);
+bush3.position.set(-0.8, 0.1, 2.2);
+
+scene.add(bush1, bush2, bush3);
 
 /**
  * Lights
