@@ -78,7 +78,27 @@ const bush3 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush3.scale.set(0.4, 0.4, 0.4);
 bush3.position.set(-0.8, 0.1, 2.2);
 
-scene.add(bush1, bush2, bush3);
+houseGrp.add(bush1, bush2, bush3);
+
+/**
+ * Graves
+ */
+const graveGeom = new THREE.BoxGeometry(0.6, 0.8, 0.2);
+const graveMat = new THREE.MeshStandardMaterial();
+const gravesGrp = new THREE.Group();
+
+for (let i = 0; i < 30; i++) {
+  const grave = new THREE.Mesh(graveGeom, graveMat);
+  gravesGrp.add(grave);
+
+  const angle = Math.random() * Math.PI * 2;
+  const radius = 4;
+  grave.position.y = grave.geometry.parameters.height / 2 + 0.01;
+  grave.position.x = Math.sin(angle) * 4;
+  grave.position.z = Math.cos(angle) * 4;
+}
+
+scene.add(gravesGrp);
 
 /**
  * Lights
