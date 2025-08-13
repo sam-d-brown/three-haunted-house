@@ -16,6 +16,39 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /**
+ * Textures
+ */
+const textureLoader = new THREE.TextureLoader();
+
+/**
+ * Floor textures
+ */
+const floorAlphaTexture = textureLoader.load("./floor/alpha.jpg");
+const floorColourTexture = textureLoader.load("./floor/diff.jpg");
+const floorARMTexture = textureLoader.load("./floor/arm.jpg");
+const floorNormalTexture = textureLoader.load("./floor/norm.jpg");
+const floorDispTexture = textureLoader.load("./floor/disp.jpg");
+
+floorColourTexture.colorSpace = THREE.SRGBColorSpace;
+
+floorColourTexture.wrapS = THREE.RepeatWrapping;
+floorColourTexture.wrapT = THREE.RepeatWrapping;
+
+floorARMTexture.wrapS = THREE.RepeatWrapping;
+floorARMTexture.wrapT = THREE.RepeatWrapping;
+
+floorNormalTexture.wrapS = THREE.RepeatWrapping;
+floorNormalTexture.wrapT = THREE.RepeatWrapping;
+
+floorDispTexture.wrapS = THREE.RepeatWrapping;
+floorDispTexture.wrapT = THREE.RepeatWrapping;
+
+floorColourTexture.repeat.set(8, 8);
+floorARMTexture.repeat.set(8, 8);
+floorNormalTexture.repeat.set(8, 8);
+floorDispTexture.repeat.set(8, 8);
+
+/**
  * House
  */
 const houseGrp = new THREE.Group();
@@ -30,7 +63,7 @@ walls.position.y = wallsHeight * 0.5;
 scene.add(houseGrp);
 
 const roof = new THREE.Mesh(
-  new THREE.ConeGeometry(3.5, 1.5, 4),
+  new THREE.ConeGeometry(3.5, 3, 4),
   new THREE.MeshStandardMaterial()
 );
 roof.rotation.y = Math.PI / 4;
@@ -41,9 +74,23 @@ houseGrp.add(roof);
  * Floor
  */
 const floor = new THREE.Mesh(
-  new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshStandardMaterial()
+  new THREE.PlaneGeometry(20, 20, 100, 100),
+  new THREE.MeshStandardMaterial({
+    // wireframe: true,
+    alphaMap: floorAlphaTexture,
+    transparent: true,
+    map: floorColourTexture,
+    aoMap: floorARMTexture,
+    roughnessMap: floorARMTexture,
+    metalnessMap: floorARMTexture,
+    normalMap: floorNormalTexture,
+    displacementMap: floorDispTexture,
+    displacementScale: 0.3,
+    displacementBias: -0.131,
+  })
 );
+gui.add(floor.material, "displacementScale").min(0).max(1).step(0.001);
+gui.add(floor.material, "displacementBias").min(-1).max(1).step(0.001);
 floor.rotation.x = 0.5 * -Math.PI;
 houseGrp.add(floor);
 
