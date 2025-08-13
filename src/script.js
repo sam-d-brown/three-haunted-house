@@ -51,10 +51,22 @@ floorDispTexture.repeat.set(8, 8);
 /**
  * House
  */
+
+const wallColourTexture = textureLoader.load("./wall/diff.jpg");
+wallColourTexture.colorSpace = THREE.SRGBColorSpace;
+const wallARMTexture = textureLoader.load("./wall/arm.jpg");
+const wallNormalTexture = textureLoader.load("./wall/norm.jpg");
+
 const houseGrp = new THREE.Group();
 const walls = new THREE.Mesh(
   new THREE.BoxGeometry(4, 2.5, 4),
-  new THREE.MeshBasicMaterial()
+  new THREE.MeshStandardMaterial({
+    map: wallColourTexture,
+    normalMap: wallNormalTexture,
+    aoMap: wallARMTexture,
+    roughnessMap: wallARMTexture,
+    metalnessMap: wallARMTexture,
+  })
 );
 const wallsHeight = walls.geometry.parameters.height;
 houseGrp.add(walls);
@@ -62,10 +74,30 @@ houseGrp.add(walls);
 walls.position.y = wallsHeight * 0.5;
 scene.add(houseGrp);
 
+const roofColourTexture = textureLoader.load("./roof/diff.jpg");
+roofColourTexture.colorSpace = THREE.SRGBColorSpace;
+const roofARMTexture = textureLoader.load("./roof/arm.jpg");
+const roofNormalTexture = textureLoader.load("./roof/norm.jpg");
+
 const roof = new THREE.Mesh(
   new THREE.ConeGeometry(3.5, 3, 4),
-  new THREE.MeshStandardMaterial()
+  new THREE.MeshStandardMaterial({
+    map: roofColourTexture,
+    normalMap: roofNormalTexture,
+    aoMap: roofARMTexture,
+    roughnessMap: roofARMTexture,
+    metalnessMap: roofARMTexture,
+  })
 );
+
+roofColourTexture.repeat.set(3, 1);
+roofARMTexture.repeat.set(3, 1);
+roofNormalTexture.repeat.set(3, 1);
+
+roofColourTexture.wrapS = THREE.RepeatWrapping;
+roofARMTexture.wrapS = THREE.RepeatWrapping;
+roofNormalTexture.wrapS = THREE.RepeatWrapping;
+
 roof.rotation.y = Math.PI / 4;
 roof.position.y = wallsHeight + roof.geometry.parameters.height / 2;
 houseGrp.add(roof);
@@ -113,17 +145,40 @@ houseGrp.add(door);
  * Bushes
  */
 
+const bushColourTexture = textureLoader.load("./bush/diff.jpg");
+bushColourTexture.colorSpace = THREE.SRGBColorSpace;
+const bushARMTexture = textureLoader.load("./bush/arm.jpg");
+const bushNormalTexture = textureLoader.load("./bush/norm.jpg");
+
+bushColourTexture.repeat.set(2, 1);
+bushARMTexture.repeat.set(2, 1);
+bushNormalTexture.repeat.set(2, 1);
+
+bushColourTexture.wrapS = THREE.RepeatWrapping;
+bushARMTexture.wrapS = THREE.RepeatWrapping;
+bushNormalTexture.wrapS = THREE.RepeatWrapping;
+
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16);
-const bushMaterial = new THREE.MeshStandardMaterial();
+const bushMaterial = new THREE.MeshStandardMaterial({
+  color: "#ccffcc",
+  map: bushColourTexture,
+  aoMap: bushARMTexture,
+  roughnessMap: bushARMTexture,
+  metalnessMap: bushARMTexture,
+  normalMap: bushNormalTexture,
+});
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush1.scale.set(0.5, 0.5, 0.5);
 bush1.position.set(0.8, 0.2, 2.2);
+bush1.rotation.x = -0.75;
 const bush2 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush2.scale.set(0.25, 0.25, 0.25);
 bush2.position.set(1.4, 0.1, 2.1);
+bush2.rotation.x = -0.75;
 const bush3 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush3.scale.set(0.4, 0.4, 0.4);
 bush3.position.set(-0.8, 0.1, 2.2);
+bush3.rotation.x = -0.75;
 
 houseGrp.add(bush1, bush2, bush3);
 
