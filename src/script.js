@@ -80,7 +80,7 @@ const roofARMTexture = textureLoader.load("./roof/arm.jpg");
 const roofNormalTexture = textureLoader.load("./roof/norm.jpg");
 
 const roof = new THREE.Mesh(
-  new THREE.ConeGeometry(3.5, 3, 4),
+  new THREE.ConeGeometry(3.5, 1.75, 4),
   new THREE.MeshStandardMaterial({
     map: roofColourTexture,
     normalMap: roofNormalTexture,
