@@ -118,7 +118,7 @@ const floor = new THREE.Mesh(
     normalMap: floorNormalTexture,
     displacementMap: floorDispTexture,
     displacementScale: 0.3,
-    displacementBias: -0.131,
+    displacementBias: -0.18,
   })
 );
 gui.add(floor.material, "displacementScale").min(0).max(1).step(0.001);
