@@ -127,13 +127,32 @@ floor.rotation.x = 0.5 * -Math.PI;
 houseGrp.add(floor);
 
 /**
- * Doooooor
+ * Door
  */
 
+const doorColourTexture = textureLoader.load("./door/color.jpg");
+const doorAlphaTexture = textureLoader.load("./door/alpha.jpg");
+const doorAOTexture = textureLoader.load("./door/ambientOcclusion.jpg");
+const doorHeightTexture = textureLoader.load("./door/height.jpg");
+const doorNormalTexture = textureLoader.load("./door/normal.jpg");
+const doorMetalnessTexture = textureLoader.load("./door/metalness.jpg");
+const doorRoughnessTexture = textureLoader.load("./door/roughness.jpg");
+
+doorColourTexture.colorSpace = THREE.SRGBColorSpace;
+
 const door = new THREE.Mesh(
-  new THREE.PlaneGeometry(2.2, 2.2),
+  new THREE.PlaneGeometry(2.2, 2.2, 100, 100),
   new THREE.MeshStandardMaterial({
-    color: "red",
+    transparent: true,
+    alphaMap: doorAlphaTexture,
+    aoMap: doorAOTexture,
+    map: doorColourTexture,
+    displacementMap: doorHeightTexture,
+    displacementScale: 0.15,
+    displacementBias: -0.04,
+    normalMap: doorNormalTexture,
+    metalnessMap: doorMetalnessTexture,
+    roughnessMap: doorRoughnessTexture,
   })
 );
 
@@ -185,8 +204,24 @@ houseGrp.add(bush1, bush2, bush3);
 /**
  * Graves
  */
+
+const graveColourTexture = textureLoader.load("./grave/diff.jpg");
+graveColourTexture.colorSpace = THREE.SRGBColorSpace;
+const graveARMTexture = textureLoader.load("./grave/arm.jpg");
+const graveNormalTexture = textureLoader.load("./grave/norm.jpg");
+
+graveColourTexture.repeat.set(0.3, 0.4);
+graveARMTexture.repeat.set(0.3, 0.4);
+graveNormalTexture.repeat.set(0.3, 0.4);
+
 const graveGeom = new THREE.BoxGeometry(0.6, 0.8, 0.2);
-const graveMat = new THREE.MeshStandardMaterial();
+const graveMat = new THREE.MeshStandardMaterial({
+  map: graveColourTexture,
+  aoMap: graveARMTexture,
+  roughnessMap: graveARMTexture,
+  metalnessMap: graveARMTexture,
+  normalMap: graveNormalTexture,
+});
 const gravesGrp = new THREE.Group();
 
 for (let i = 0; i < 30; i++) {
